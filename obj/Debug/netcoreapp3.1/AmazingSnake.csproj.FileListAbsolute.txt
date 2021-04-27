@@ -1,0 +1,13 @@
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\bin\Debug\netcoreapp3.1\AmazingSnake.exe
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\bin\Debug\netcoreapp3.1\AmazingSnake.deps.json
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\bin\Debug\netcoreapp3.1\AmazingSnake.runtimeconfig.json
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\bin\Debug\netcoreapp3.1\AmazingSnake.runtimeconfig.dev.json
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\bin\Debug\netcoreapp3.1\AmazingSnake.dll
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\bin\Debug\netcoreapp3.1\AmazingSnake.pdb
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\obj\Debug\netcoreapp3.1\AmazingSnake.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\obj\Debug\netcoreapp3.1\AmazingSnake.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\obj\Debug\netcoreapp3.1\AmazingSnake.AssemblyInfo.cs
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\obj\Debug\netcoreapp3.1\AmazingSnake.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\obj\Debug\netcoreapp3.1\AmazingSnake.dll
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\obj\Debug\netcoreapp3.1\AmazingSnake.pdb
+C:\Users\Admin\source\repos\AmazingSnake\AmazingSnake\obj\Debug\netcoreapp3.1\AmazingSnake.genruntimeconfig.cache
