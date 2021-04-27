@@ -4,69 +4,16 @@ using System.Threading.Tasks;
 
 namespace AmazingSnake
 {
-    class Snake
-    {
-        public List<int[]> parts;
-        public int[] orientation = { 1, 0 };
-        
-        public Snake(int startx, int starty)
+        class Program
         {
-            parts = new List<int[]>();
-            int[] snakehead = { startx, starty };
-            parts.Add(snakehead);
-        }
-
-        public int[] getHead()
-        {
-            return this.parts[0];
-        }
-
-        public int[] getTail()
-        {
-            return this.parts[this.parts.Count - 1];
-        }
-
-        public void setDirection(char c) {
-            c = char.ToUpper(c);
-            if(c == 'W') { this.goUp(); }
-            else if(c == 'A') { this.goLeft(); }
-            else if (c == 'S') { this.goDown(); }
-            else if (c == 'D') { this.goRight(); }
-        }
-
-        private void goUp() { 
-            this.orientation = new int[]{ -1, 0 };
-        }
-        private void goDown() {
-            this.orientation = new int[] { 1, 0 };
-        }
-        private void goRight() {
-            this.orientation = new int[] { 0, 1 };
-        }
-        private void goLeft() {
-            this.orientation = new int[] { 0, -1 };
-        }
-
-        public void move()
-        {
-            for(int i = this.parts.Count-1; i > 0 ; i--)
-            {
-                this.parts[i] = this.parts[i - 1];
-            }
-            int[] actual = this.parts[0];
-            int x = actual[0] + orientation[0];
-            int y = actual[1] + orientation[1];
-            this.parts[0] = new int[]{ x, y };
-
-        }
-    }
-    class Program
-    {
         public static ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
         public static char key = 'S';
         public static Snake sneaky = new Snake(0, 5);
         public static bool gameIsRunning = true;
         public static int[] food = { 5,5 };
+        public static int width = 15;
+        public static int height = 15;
+
 
         static void Input()
         {
@@ -83,18 +30,15 @@ namespace AmazingSnake
         static void refreshConsole() {
             Console.Clear();
             Input();
-            char[,] palya = {
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.','.'}
-            };
+            char[,] palya = new char[width,height];
+
+            for (int w = 0; w < width; w++) {
+                for (int h = 0; h < height; h++) {
+                    palya[w, h] = '.';
+                }
+            }
+
+            
 
             palya[food[0], food[1]] = '$';
 
@@ -107,9 +51,12 @@ namespace AmazingSnake
             try {
             if (palya[head[0], head[1]] == '$')
                 {
+                    Random rand = new Random();
+
+                    food = new int[] { rand.Next(width), rand.Next(height) };
+
                     int[] snakepart = { tail[0]-1, tail[1]};
                     sneaky.parts.Add(snakepart);
-                    Console.WriteLine("Nyami!");
                 }
             }
                 catch (Exception)
@@ -124,12 +71,12 @@ namespace AmazingSnake
                     palya[part[0], part[1]] = '@';   
                 }
                 catch (Exception)
-                { /*SEMMIT SEM TESZÜNK, mert a farok kicsit bugosan jelenik meg és az hibát okozhat :D */ }
+                { }
             }
 
-            for (int x = 0; x < 10; x++) // MAJD KI KELL JAVÍTANI!
+            for (int x = 0; x < palya.GetLength(0); x++)
             {
-                for (int y = 0; y < 10; y++) // MAJD KI KELL JAVÍTANI!
+                for (int y = 0; y < palya.GetLength(1); y++)
                 {
                     Console.Write(" "+palya[x, y]+" ");
                 }
@@ -148,7 +95,6 @@ namespace AmazingSnake
                 num++;
                 refreshConsole();
             }
-
             Console.Clear();
             Console.WriteLine("GAME OVER");
             Console.WriteLine("Pontszám: "+ sneaky.parts.Count);
