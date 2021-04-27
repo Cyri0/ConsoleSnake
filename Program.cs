@@ -16,6 +16,16 @@ namespace AmazingSnake
             parts.Add(snakehead);
         }
 
+        public int[] getHead()
+        {
+            return this.parts[0];
+        }
+
+        public int[] getTail()
+        {
+            return this.parts[this.parts.Count - 1];
+        }
+
         public void setDirection(char c) {
             c = char.ToUpper(c);
             if(c == 'W') { this.goUp(); }
@@ -39,10 +49,15 @@ namespace AmazingSnake
 
         public void move()
         {
+            for(int i = this.parts.Count-1; i > 0 ; i--)
+            {
+                this.parts[i] = this.parts[i - 1];
+            }
             int[] actual = this.parts[0];
             int x = actual[0] + orientation[0];
             int y = actual[1] + orientation[1];
             this.parts[0] = new int[]{ x, y };
+
         }
     }
     class Program
@@ -68,49 +83,55 @@ namespace AmazingSnake
         static void refreshConsole() {
             Console.Clear();
             Input();
-            Console.WriteLine(key);
             char[,] palya = {
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
-                { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' }
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'},
+                {'.','.','.','.','.','.','.','.','.','.'}
             };
 
             palya[food[0], food[1]] = '$';
 
             sneaky.setDirection(key);
-
             sneaky.move();
 
-            foreach (var part in sneaky.parts)
-            {
-                try
+            int[] head = sneaky.getHead();
+            int[] tail = sneaky.getTail();
+
+            try {
+            if (palya[head[0], head[1]] == '$')
                 {
-                    if(palya[part[0], part[1]] == '$')
-                    {
-                        //int[] snakepart = { part[0] , part[1] };
-                        //sneaky.parts.Add(snakepart);
-                        Console.WriteLine("Nyami!");
-                    }
-                    palya[part[0], part[1]] = '@';
+                    int[] snakepart = { tail[0]-1, tail[1]};
+                    sneaky.parts.Add(snakepart);
+                    Console.WriteLine("Nyami!");
                 }
+            }
                 catch (Exception)
                 {
                     gameIsRunning = false;
                 }
+
+            foreach (var part in sneaky.parts)
+            {
+                try
+                {   
+                    palya[part[0], part[1]] = '@';   
+                }
+                catch (Exception)
+                { /*SEMMIT SEM TESZÜNK, mert a farok kicsit bugosan jelenik meg és az hibát okozhat :D */ }
             }
 
             for (int x = 0; x < 10; x++) // MAJD KI KELL JAVÍTANI!
             {
                 for (int y = 0; y < 10; y++) // MAJD KI KELL JAVÍTANI!
                 {
-                    Console.Write("[" + palya[x, y] + "]");
+                    Console.Write(" "+palya[x, y]+" ");
                 }
                 Console.WriteLine();
             }
@@ -120,13 +141,12 @@ namespace AmazingSnake
             int num = 0;
             while (gameIsRunning) { 
                 DateTime now = DateTime.Now;
-                DateTime refresh = now.AddSeconds(0.5);
+                DateTime refresh = now.AddSeconds(0.1);
                 while(now < refresh) {
                         now = DateTime.Now;    
                 }
                 num++;
                 refreshConsole();
-                Console.WriteLine(num);
             }
 
             Console.Clear();
