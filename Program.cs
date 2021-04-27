@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AmazingSnake
 {
@@ -15,6 +16,27 @@ namespace AmazingSnake
             parts.Add(snakehead);
         }
 
+        public void setDirection(char c) {
+            c = char.ToUpper(c);
+            if(c == 'W') { this.goUp(); }
+            else if(c == 'A') { this.goLeft(); }
+            else if (c == 'S') { this.goDown(); }
+            else if (c == 'D') { this.goRight(); }
+        }
+
+        private void goUp() { 
+            this.orientation = new int[]{ -1, 0 };
+        }
+        private void goDown() {
+            this.orientation = new int[] { 1, 0 };
+        }
+        private void goRight() {
+            this.orientation = new int[] { 0, 1 };
+        }
+        private void goLeft() {
+            this.orientation = new int[] { 0, -1 };
+        }
+
         public void move()
         {
             int[] actual = this.parts[0];
@@ -25,12 +47,28 @@ namespace AmazingSnake
     }
     class Program
     {
+        public static ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
+        public static char key = 'S';
         public static Snake sneaky = new Snake(0, 5);
         public static bool gameIsRunning = true;
         public static int[] food = { 5,5 };
 
+        static void Input()
+        {
+            if (Console.KeyAvailable)
+            {
+                keyInfo = Console.ReadKey(true);
+                if(keyInfo.KeyChar == 'w' || keyInfo.KeyChar == 'W' ||
+                   keyInfo.KeyChar == 'a' || keyInfo.KeyChar == 'A' ||
+                   keyInfo.KeyChar == 's' || keyInfo.KeyChar == 'S' ||
+                   keyInfo.KeyChar == 'd' || keyInfo.KeyChar == 'D')
+                key = keyInfo.KeyChar;
+            }
+        }
         static void refreshConsole() {
             Console.Clear();
+            Input();
+            Console.WriteLine(key);
             char[,] palya = {
                 { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
                 { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ' },
@@ -45,6 +83,8 @@ namespace AmazingSnake
             };
 
             palya[food[0], food[1]] = '$';
+
+            sneaky.setDirection(key);
 
             sneaky.move();
 
